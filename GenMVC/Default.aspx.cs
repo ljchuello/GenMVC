@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Web.UI;
 using Libreria;
 
@@ -62,6 +63,13 @@ namespace GenMVC
                     Notificacion.Success(this, "No se ha podido establecer una conexión con la BD =(");
                     return;
                 }
+
+                // Obtenemos las tablas
+                DataTable dataTable = _sql.Select_Tables(_sql);
+                ddlBdTablas.DataSource = dataTable;
+                ddlBdTablas.DataTextField = "TABLE_NAME";
+                ddlBdTablas.DataValueField = "TABLE_NAME";
+                ddlBdTablas.DataBind();
 
                 // Libre de pecados
                 Notificacion.Success(this, "Se ha establecido la conexión con éxito");
