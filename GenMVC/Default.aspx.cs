@@ -6,17 +6,14 @@ namespace GenMVC
 {
     public partial class Default : Page
     {
+        private Sql _sql = new Sql();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 UControl.EvitarDobleEnvioButton(this, btnConectarse);
             }
-        }
-
-        protected void btnPrueba_OnClick(object sender, EventArgs e)
-        {
-            Notificacion.Success(this, "abc-123");
         }
 
         #region Base de datos
@@ -52,6 +49,22 @@ namespace GenMVC
                     Notificacion.Success(this, "Debe ingresar la base de datos a la cual desea conectarse");
                     return;
                 }
+
+                // Llenamos
+                _sql.Servidor = txtDbServidor.Text;
+                _sql.Usuario = txtDbusuario.Text;
+                _sql.Contrasenia = txtContrasenia.Text;
+                _sql.BaseDatos = txtDbBaseDatos.Text;
+
+                // Validamos si funciona
+                if (!_sql.Exito(_sql))
+                {
+                    Notificacion.Success(this, "No se ha podido establecer una conexión con la BD =(");
+                    return;
+                }
+
+                // Libre de pecados
+                Notificacion.Success(this, "Se ha establecido la conexión con éxito");
             }
             catch (Exception ex)
             {

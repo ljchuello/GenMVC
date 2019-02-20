@@ -55,39 +55,73 @@
 
                                 <asp:UpdatePanel runat="server">
                                     <ContentTemplate>
-
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label for="<%=txtDbServidor.ClientID%>">Servidor</label>
-                                                <asp:TextBox ID="txtDbServidor" runat="server" CssClass="form-control"></asp:TextBox>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label for="<%=txtDbusuario.ClientID%>">Usuario</label>
-                                                <asp:TextBox ID="txtDbusuario" runat="server" CssClass="form-control"></asp:TextBox>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label for="<%=txtContrasenia.ClientID%>">Contraseña</label>
-                                                <asp:TextBox ID="txtContrasenia" runat="server" CssClass="form-control"></asp:TextBox>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-xs-12 col-sm-6">
-                                                <label for="<%=txtDbBaseDatos.ClientID%>">Base de datos</label>
-                                                <asp:TextBox ID="txtDbBaseDatos" runat="server" CssClass="form-control"></asp:TextBox>
-                                            </div>
-                                        </div>
                                         
                                         <div class="row">
-                                            <div class="col-xs-12 col-sm-6">
-                                                <asp:Button ID="btnConectarse" runat="server" CssClass="btn btn-primary" Text="Conectarse" OnClick="btnConectarse_OnClick" />
+                                            
+                                            <div class="col-xs-6">
+                                                
+                                                <div class="col-xs-12">
+                                                    <h3>Conectarse al servidor</h3>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtDbServidor.ClientID%>">Servidor</label>
+                                                        <asp:TextBox ID="txtDbServidor" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtDbusuario.ClientID%>">Usuario</label>
+                                                        <asp:TextBox ID="txtDbusuario" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtContrasenia.ClientID%>">Contraseña</label>
+                                                        <asp:TextBox ID="txtContrasenia" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtDbBaseDatos.ClientID%>">Base de datos</label>
+                                                        <asp:TextBox ID="txtDbBaseDatos" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <asp:Button ID="btnConectarse" runat="server" CssClass="btn btn-primary" Text="Conectarse" OnClick="btnConectarse_OnClick" />
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <div class="col-xs-6">
+                                                
+                                                <div class="col-xs-12">
+                                                    <h3>Conectarse al servidor</h3>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=ddlBdTablas.ClientID%>">Servidor</label>
+                                                        <asp:DropDownList ID="ddlBdTablas" runat="server" CssClass="form-control">
+                                                            <asp:ListItem Value="-">-</asp:ListItem>
+                                                        </asp:DropDownList>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <asp:Button ID="btnBdGenerar" runat="server" CssClass="btn btn-primary" Text="Generar" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
                                         </div>
 
                                     </ContentTemplate>
