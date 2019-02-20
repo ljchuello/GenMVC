@@ -67,12 +67,48 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="base\css\stylesheet.css" />
+    <Content Include="base\img\cara1.PNG" />
+    <Content Include="base\img\logo_blanco.png" />
+    <Content Include="base\img\logo_blan_peq.png" />
+    <Content Include="base\img\logo_grande.png" />
+    <Content Include="base\img\srmtl-nav.png" />
+    <Content Include="base\img\user_default.jpg" />
+    <Content Include="bootstrap\v3.3.7\css\bootstrap-theme.css" />
+    <Content Include="bootstrap\v3.3.7\css\bootstrap-theme.min.css" />
+    <Content Include="bootstrap\v3.3.7\css\bootstrap.css" />
+    <Content Include="bootstrap\v3.3.7\css\bootstrap.min.css" />
+    <Content Include="bootstrap\v3.3.7\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="bootstrap\v3.3.7\js\bootstrap.js" />
+    <Content Include="bootstrap\v3.3.7\js\bootstrap.min.js" />
+    <Content Include="bootstrap\v3.3.7\js\npm.js" />
+    <Content Include="Default.aspx" />
+    <Content Include="jquery\v3.3.1\jquery-3.3.1.js" />
+    <Content Include="jquery\v3.3.1\jquery-3.3.1.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cadena.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Notificacion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="uControl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bootstrap\v3.3.7\css\bootstrap-theme.css.map" />
+    <Content Include="bootstrap\v3.3.7\css\bootstrap-theme.min.css.map" />
+    <Content Include="bootstrap\v3.3.7\css\bootstrap.css.map" />
+    <Content Include="bootstrap\v3.3.7\css\bootstrap.min.css.map" />
+    <Content Include="bootstrap\v3.3.7\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="bootstrap\v3.3.7\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="bootstrap\v3.3.7\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="bootstrap\v3.3.7\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -81,6 +117,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
