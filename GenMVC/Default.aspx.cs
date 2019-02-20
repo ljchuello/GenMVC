@@ -11,9 +11,20 @@ namespace GenMVC
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!IsPostBack)
             {
+                // Cargamos la sesión anterior
+                _sql = Fichero.Leer();
+
+                txtDbServidor.Text = _sql.Servidor;
+                txtDbusuario.Text = _sql.Usuario;
+                txtContrasenia.Text = _sql.Contrasenia;
+                txtDbBaseDatos.Text = _sql.BaseDatos;
+
+                // Evitamso el doble click
                 UControl.EvitarDobleEnvioButton(this, btnConectarse);
+                UControl.EvitarDobleEnvioButton(this, btnBdGenerar);
             }
         }
 
@@ -63,6 +74,9 @@ namespace GenMVC
                     Notificacion.Success(this, "No se ha podido establecer una conexión con la BD =(");
                     return;
                 }
+
+                // Guardamos los cambios
+                Fichero.Escribir(_sql);
 
                 // Obtenemos las tablas
                 DataTable dataTable = _sql.Select_Tables(_sql);
