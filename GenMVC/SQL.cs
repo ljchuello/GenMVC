@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace GenMVC
 {
@@ -126,6 +128,71 @@ namespace GenMVC
             catch (Exception)
             {
                 return dataTable;
+            }
+        }
+
+        private static string directorio = @"C:\GenMVC\";
+        private static readonly string archivo = $"{directorio}\\sql.config";
+
+        public static void Escribir(Sql sql)
+        {
+            try
+            {
+                // Validamos que exista u ndirectorio
+                if (!Directory.Exists(directorio))
+                {
+                    // Creamos el directorio
+                    Directory.CreateDirectory(directorio);
+                }
+
+                // Validamos que exista el archivo
+                if (!File.Exists(archivo))
+                {
+                    // Creamos el archivos
+                    File.WriteAllText(archivo, string.Empty);
+                }
+
+                // Escribimos en el archivoo
+                File.WriteAllText(archivo, Fichero.ObjectToJson(sql));
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+        public static Sql Leer()
+        {
+            Sql sql = new Sql();
+
+            try
+            {
+                // Validamos que exista un directorio
+                if (!Directory.Exists(directorio))
+                {
+                    // Creamos el directorio
+                    Directory.CreateDirectory(directorio);
+                }
+
+                // Validamos que exista el archivo
+                if (!File.Exists(archivo))
+                {
+                    // Creamos el archivos
+                    File.WriteAllText(archivo, string.Empty);
+                }
+
+                // Escribimos en el archivoo
+                string temp = File.ReadAllText(archivo);
+
+                // Convertimos
+                sql = JsonConvert.DeserializeObject<Sql>(temp) ?? new Sql();
+
+                // Libre de pecados
+                return sql;
+            }
+            catch (Exception)
+            {
+                return sql;
             }
         }
     }

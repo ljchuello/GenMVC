@@ -26,7 +26,7 @@
 <body>
     <form id="form1" runat="server">
 
-        <asp:scriptmanager runat="server"></asp:scriptmanager>
+        <asp:ScriptManager runat="server"></asp:ScriptManager>
 
         <div class="row" style="padding: 10px;">
             <!-- Tab Principal -->
@@ -46,18 +46,20 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#tabInicio" aria-controls="tabInicio" role="tab" data-toggle="tab">Inico</a></li>
                             <li role="presentation"><a href="#TabBd" aria-controls="TabBd" role="tab" data-toggle="tab">Base de datos</a></li>
+                            <li role="presentation"><a href="#TabAcronimo" aria-controls="TabAcronimo" role="tab" data-toggle="tab">Acrónimo</a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
+
                             <div role="tabpanel" class="tab-pane active" id="tabInicio">
-                                
+
                                 <div class="row" style="padding: 10px;">
-                                    
+
                                     <asp:UpdatePanel runat="server">
                                         <ContentTemplate>
-                                        
+
                                             <div class="col-xs-12">
-                                                
+
                                                 <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%">
                                                     <AlternatingRowStyle BackColor="White" />
                                                     <EditRowStyle BackColor="#2461BF" />
@@ -80,15 +82,16 @@
                                 </div>
 
                             </div>
+
                             <div role="tabpanel" class="tab-pane" id="TabBd">
 
-                                <asp:updatepanel runat="server">
+                                <asp:UpdatePanel runat="server">
                                     <ContentTemplate>
-                                        
+
                                         <div class="row">
-                                            
+
                                             <div class="col-xs-6">
-                                                
+
                                                 <div class="col-xs-12">
                                                     <h3>Conectarse al servidor</h3>
                                                 </div>
@@ -129,11 +132,11 @@
                                             </div>
 
                                             <div class="col-xs-6">
-                                                
+
                                                 <div class="col-xs-12">
                                                     <h3>Conectarse al servidor</h3>
                                                 </div>
-                                                
+
                                                 <div class="row">
                                                     <div class="form-group col-xs-12">
                                                         <label for="<%=ddlBdTablas.ClientID%>">Servidor</label>
@@ -142,7 +145,7 @@
                                                         </asp:DropDownList>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="row">
                                                     <div class="col-xs-12">
                                                         <asp:Button ID="btnBdGenerar" runat="server" CssClass="btn btn-primary" Text="Generar" OnClick="btnBdGenerar_OnClick" />
@@ -154,9 +157,66 @@
                                         </div>
 
                                     </ContentTemplate>
-                                </asp:updatepanel>
+                                </asp:UpdatePanel>
 
                             </div>
+
+                            <div role="tabpanel" class="tab-pane" id="TabAcronimo">
+                                
+                                <asp:UpdatePanel runat="server">
+                                    <ContentTemplate>
+                                        
+                                        <div class="row">
+
+                                            <div class="col-xs-6">
+
+                                                <div class="col-xs-12">
+                                                    <h3>Acrónimosr</h3>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtProyectoModelo.ClientID%>">Proyecto modelo</label>
+                                                        <asp:TextBox ID="txtProyectoModelo" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtAcronimoModelo.ClientID%>">Acrónimo modelo</label>
+                                                        <asp:TextBox ID="txtAcronimoModelo" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtProyectoControlador.ClientID%>">Proyecto controlador</label>
+                                                        <asp:TextBox ID="txtProyectoControlador" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtAcronimoControlador.ClientID%>">Acrónimo controlador</label>
+                                                        <asp:TextBox ID="txtAcronimoControlador" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <asp:Button ID="btnGuardarAcronimo" runat="server" CssClass="btn btn-primary" Text="Guardar" OnClick="btnGuardarAcronimo_OnClick" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+
+                            </div>
+
                         </div>
 
                     </div>

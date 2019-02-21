@@ -8,6 +8,7 @@ namespace GenMVC
     public partial class Default : Page
     {
         private Sql _sql = new Sql();
+        private Acronimo _acronimo = new Acronimo();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -15,7 +16,7 @@ namespace GenMVC
             if (!IsPostBack)
             {
                 // Cargamos la sesión anterior
-                _sql = Fichero.Leer();
+                _sql = Sql.Leer();
 
                 txtDbServidor.Text = _sql.Servidor;
                 txtDbusuario.Text = _sql.Usuario;
@@ -25,6 +26,7 @@ namespace GenMVC
                 // Evitamso el doble click
                 UControl.EvitarDobleEnvioButton(this, btnConectarse);
                 UControl.EvitarDobleEnvioButton(this, btnBdGenerar);
+                UControl.EvitarDobleEnvioButton(this, btnGuardarAcronimo);
             }
         }
 
@@ -76,7 +78,7 @@ namespace GenMVC
                 }
 
                 // Guardamos los cambios
-                Fichero.Escribir(_sql);
+                Sql.Escribir(_sql);
 
                 // Obtenemos las tablas
                 DataTable dataTable = _sql.Select_Tables(_sql);
@@ -99,7 +101,7 @@ namespace GenMVC
             try
             {
                 // Validamos que este buena la conexión
-                _sql = Fichero.Leer();
+                _sql = Sql.Leer();
 
                 // Validamos si conecta
                 if (!_sql.ProbarConexion(_sql))
@@ -129,5 +131,76 @@ namespace GenMVC
         }
 
         #endregion
+
+        protected void btnGuardarAcronimo_OnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                // Validamos
+                if (!ValidarAcronimos())
+                {
+                    return;
+                }
+
+                // Seteamos
+                _acronimo.ProyectoModelo = txtProyectoModelo.Text;
+                _acronimo.AcronimoModelo = txtAcronimoModelo.Text;
+                _acronimo.ProyectoControlador = txtProyectoControlador.Text;
+                _acronimo.AcronimoControlador = txtAcronimoControlador.Text;
+
+                // Guardamos
+                Acronimo.Escribir(_acronimo);
+
+                // Libre de pecados
+                Notificacion.Success(this, $"Se ha guardado el acrónimo");
+            }
+            catch (Exception ex)
+            {
+                Notificacion.Success(this, $"Ha ocurrido un error; {ex.Message}");
+            }
+        }
+
+        bool ValidarAcronimos()
+        {
+            try
+            {
+                // Validamos que haya ingresado un modelo
+                if (Cadena.Vacia(txtProyectoModelo.Text))
+                {
+                    Notificacion.Success(this, "Debe ingresar un nombre de proyecto del modelo");
+                    return false;
+                }
+
+                // Validamos que haya ingresado un acronimo paramodelo
+                if (Cadena.Vacia(txtAcronimoModelo.Text))
+                {
+                    Notificacion.Success(this, "Debe ingresar un acronimo para el modelo");
+                    return false;
+                }
+
+                // Validamos que haya ingresado un controlador
+                if (Cadena.Vacia(txtProyectoControlador.Text))
+                {
+                    Notificacion.Success(this, "Debe ingresar el nombre de proyecto del modelo");
+                    return false;
+                }
+
+
+                // Validamos que haya ingresado un controlador
+                if (Cadena.Vacia(txtAcronimoControlador.Text))
+                {
+                    Notificacion.Success(this, "Debe ingresar el nombre del acronimo del controlador");
+                    return false;
+                }
+
+                // Libre de pecados
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Notificacion.Success(this, $"Ha ocurrido un error; {ex.Message}");
+                return false;
+            }
+        }
     }
 }
