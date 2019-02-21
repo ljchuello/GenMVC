@@ -26,7 +26,7 @@
 <body>
     <form id="form1" runat="server">
 
-        <asp:ScriptManager runat="server"></asp:ScriptManager>
+        <asp:scriptmanager runat="server"></asp:scriptmanager>
 
         <div class="row" style="padding: 10px;">
             <!-- Tab Principal -->
@@ -44,16 +44,45 @@
                     <div>
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#tabInicio" aria-controls="tabInicio" role="tab" data-toggle="tab">tabInicio</a></li>
+                            <li role="presentation" class="active"><a href="#tabInicio" aria-controls="tabInicio" role="tab" data-toggle="tab">Inico</a></li>
                             <li role="presentation"><a href="#TabBd" aria-controls="TabBd" role="tab" data-toggle="tab">Base de datos</a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="tabInicio">
+                                
+                                <div class="row" style="padding: 10px;">
+                                    
+                                    <asp:UpdatePanel runat="server">
+                                        <ContentTemplate>
+                                        
+                                            <div class="col-xs-12">
+                                                
+                                                <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%">
+                                                    <AlternatingRowStyle BackColor="White" />
+                                                    <EditRowStyle BackColor="#2461BF" />
+                                                    <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                    <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                                    <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                                                    <RowStyle BackColor="#EFF3FB" />
+                                                    <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                                                    <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                                                    <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                                                    <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                                                    <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                                                </asp:GridView>
+
+                                            </div>
+
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+
+                                </div>
+
                             </div>
                             <div role="tabpanel" class="tab-pane" id="TabBd">
 
-                                <asp:UpdatePanel runat="server">
+                                <asp:updatepanel runat="server">
                                     <ContentTemplate>
                                         
                                         <div class="row">
@@ -116,7 +145,7 @@
                                                 
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <asp:Button ID="btnBdGenerar" runat="server" CssClass="btn btn-primary" Text="Generar" />
+                                                        <asp:Button ID="btnBdGenerar" runat="server" CssClass="btn btn-primary" Text="Generar" OnClick="btnBdGenerar_OnClick" />
                                                     </div>
                                                 </div>
 
@@ -125,7 +154,7 @@
                                         </div>
 
                                     </ContentTemplate>
-                                </asp:UpdatePanel>
+                                </asp:updatepanel>
 
                             </div>
                         </div>

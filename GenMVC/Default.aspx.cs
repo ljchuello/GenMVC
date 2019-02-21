@@ -69,7 +69,7 @@ namespace GenMVC
                 _sql.BaseDatos = txtDbBaseDatos.Text;
 
                 // Validamos si funciona
-                if (!_sql.Exito(_sql))
+                if (!_sql.ProbarConexion(_sql))
                 {
                     Notificacion.Success(this, "No se ha podido establecer una conexión con la BD =(");
                     return;
@@ -87,6 +87,40 @@ namespace GenMVC
 
                 // Libre de pecados
                 Notificacion.Success(this, "Se ha establecido la conexión con éxito");
+            }
+            catch (Exception ex)
+            {
+                Notificacion.Success(this, $"Ha ocurrido un error; {ex.Message}");
+            }
+        }
+
+        protected void btnBdGenerar_OnClick(object sender, EventArgs e)
+        {
+            try
+            {
+                // Validamos que este buena la conexión
+                _sql = Fichero.Leer();
+
+                // Validamos si conecta
+                if (!_sql.ProbarConexion(_sql))
+                {
+                    Notificacion.Success(this, $"No se ha podido establecer una conexión con la BD");
+                    return;
+                }
+
+                // Existe la tabla mencionada?
+                if (!_sql.ExisteTabla(_sql, ddlBdTablas.SelectedValue))
+                {
+                    Notificacion.Success(this, $"No exista la tabla {ddlBdTablas.SelectedValue}");
+                    return;
+                }
+
+                // Generamos la consulta
+                DataTable dataTable = _sql.Select_Campos(_sql, ddlBdTablas.SelectedValue);
+
+                // Le mostramos eso al grid
+                GridView1.DataSource = dataTable;
+                GridView1.DataBind();
             }
             catch (Exception ex)
             {
