@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GenMVC
@@ -17,6 +18,7 @@ namespace GenMVC
                 stringBuilder.AppendLine($"// Clase generada por");
                 stringBuilder.AppendLine($"// Sermatick Cia Ltda");
                 stringBuilder.AppendLine($"using System;");
+                stringBuilder.AppendLine($"using System.Data;");
                 stringBuilder.AppendLine($"using System.Data.SqlClient;");
                 stringBuilder.AppendLine($"using {acronimo.ProyectoModelo};");
                 stringBuilder.AppendLine($"");
@@ -26,6 +28,58 @@ namespace GenMVC
                 stringBuilder.AppendLine($"    {{");
                 stringBuilder.AppendLine($"        private {acronimo.AcronimoModelo}{tbl} {acronimo.AcronimoModelo}{tbl} = new {acronimo.AcronimoModelo}{tbl}();");
                 stringBuilder.AppendLine($"");
+
+                #region Select´s
+
+                foreach (var rowSelect in listCampos.Where(x => x.Where).ToList())
+                {
+                    stringBuilder.AppendLine($"        public {acronimo.AcronimoModelo}{tbl} Select_{rowSelect.Campo}(string {rowSelect.Campo})");
+                    stringBuilder.AppendLine($"        {{");
+                    stringBuilder.AppendLine($"            try");
+                    stringBuilder.AppendLine($"            {{");
+                    stringBuilder.AppendLine($"                SqlCommand sqlCommand = new SqlCommand();");
+                    stringBuilder.AppendLine($"                sqlCommand.Connection = Conexion.MySqlConnection;");
+
+                    switch (rowSelect.TipoSql)
+                    {
+                        case "decimal":
+                        case "int":
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {rowSelect.Campo}")}\";");
+                            break;
+
+                        case "bool":
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {rowSelect.Campo}")}\";");
+                            break;
+
+                        case "DateTime":
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"SET DATEFORMAT YMD; {GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{rowSelect.Campo}'")}\";");
+                            break;
+
+                        default:
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{rowSelect.Campo}'")}\";");
+                            break;
+                    }
+
+                    stringBuilder.AppendLine($"                sqlCommand.CommandType = CommandType.Text;");
+                    stringBuilder.AppendLine($"                using (SqlDataReader sqlDataReader = sqlCommand.ExecuteReader())");
+                    stringBuilder.AppendLine($"                {{");
+                    stringBuilder.AppendLine($"                    while (sqlDataReader.Read())");
+                    stringBuilder.AppendLine($"                    {{");
+                    stringBuilder.AppendLine($"                        {acronimo.AcronimoModelo}{tbl} = Maker(sqlDataReader);");
+                    stringBuilder.AppendLine($"                    }}");
+                    stringBuilder.AppendLine($"                }}");
+                    stringBuilder.AppendLine($"                return {acronimo.AcronimoModelo}{tbl};");
+                    stringBuilder.AppendLine($"            }}");
+                    stringBuilder.AppendLine($"            catch (Exception ex)");
+                    stringBuilder.AppendLine($"            {{");
+                    stringBuilder.AppendLine($"                Console.WriteLine(ex);");
+                    stringBuilder.AppendLine($"                return new {acronimo.AcronimoModelo}{tbl}();");
+                    stringBuilder.AppendLine($"            }}");
+                    stringBuilder.AppendLine($"        }}");
+                    stringBuilder.AppendLine($"");
+                }
+
+                #endregion
 
                 #region maker
 
@@ -55,7 +109,7 @@ namespace GenMVC
                             break;
 
                         default:
-                                stringBuilder.AppendLine($"            {acronimo.AcronimoModelo}{tbl}.{row.Campo} = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal(\"{row.Campo}\")) ? string.Empty : sqlDataReader.GetString(sqlDataReader.GetOrdinal(\"{row.Campo}\"));");
+                            stringBuilder.AppendLine($"            {acronimo.AcronimoModelo}{tbl}.{row.Campo} = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal(\"{row.Campo}\")) ? string.Empty : sqlDataReader.GetString(sqlDataReader.GetOrdinal(\"{row.Campo}\"));");
                             break;
                     }
                 }
@@ -75,6 +129,32 @@ namespace GenMVC
             {
                 return stringBuilder.ToString();
             }
+        }
+
+        private static string GenerarSelect(List<OCampos> listCampos, string tbl, string terminacion)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append("SELECT ");
+
+            for (int i = 0; i < listCampos.Count; i++)
+            {
+                // Ult posicion
+                if (i != listCampos.Count - 1)
+                {
+                    // No es diferente
+                    stringBuilder.Append($"{listCampos[i].Campo}, ");
+                }
+                else
+                {
+                    // Si es difente
+                    stringBuilder.Append($"{listCampos[i].Campo} ");
+                }
+            }
+
+            stringBuilder.Append($"FROM {tbl} {terminacion}");
+
+            return stringBuilder.ToString();
         }
     }
 }
