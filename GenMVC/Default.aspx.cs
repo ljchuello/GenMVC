@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Libreria;
 
 namespace GenMVC
@@ -9,6 +11,7 @@ namespace GenMVC
     {
         private Sql _sql = new Sql();
         private Acronimo _acronimo = new Acronimo();
+        private OCampos _oCampos = new OCampos();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -17,11 +20,17 @@ namespace GenMVC
             {
                 // Cargamos la sesión anterior
                 _sql = Sql.Leer();
+                _acronimo = Acronimo.Leer();
 
                 txtDbServidor.Text = _sql.Servidor;
                 txtDbusuario.Text = _sql.Usuario;
                 txtContrasenia.Text = _sql.Contrasenia;
                 txtDbBaseDatos.Text = _sql.BaseDatos;
+
+                txtProyectoModelo.Text = _acronimo.ProyectoModelo;
+                txtAcronimoModelo.Text = _acronimo.AcronimoModelo;
+                txtProyectoControlador.Text = _acronimo.ProyectoControlador;
+                txtAcronimoControlador.Text = _acronimo.AcronimoControlador;
 
                 // Evitamso el doble click
                 UControl.EvitarDobleEnvioButton(this, btnConectarse);
@@ -36,44 +45,9 @@ namespace GenMVC
         {
             try
             {
-                // Validmoas que haya ingresado un servidor
-                if (Cadena.Vacia(txtDbServidor.Text))
+                // Validamos la BD
+                if (!ValidarBd())
                 {
-                    Notificacion.Success(this, "Debe de ingresar un servidor SQL al cual conectarse");
-                    return;
-                }
-
-                // Validmoas que haya ingresado un usario
-                if (Cadena.Vacia(txtDbusuario.Text))
-                {
-                    Notificacion.Success(this, "Debe de ingresar un usuario SQL con el cual se conectará");
-                    return;
-                }
-
-                // Validmoas que haya ingresado una contraseña
-                if (Cadena.Vacia(txtContrasenia.Text))
-                {
-                    Notificacion.Success(this, "Debe de ingresar una contraseña de SQL");
-                    return;
-                }
-
-                // Validmoas que haya ingresado una BD
-                if (Cadena.Vacia(txtDbBaseDatos.Text))
-                {
-                    Notificacion.Success(this, "Debe ingresar la base de datos a la cual desea conectarse");
-                    return;
-                }
-
-                // Llenamos
-                _sql.Servidor = txtDbServidor.Text;
-                _sql.Usuario = txtDbusuario.Text;
-                _sql.Contrasenia = txtContrasenia.Text;
-                _sql.BaseDatos = txtDbBaseDatos.Text;
-
-                // Validamos si funciona
-                if (!_sql.ProbarConexion(_sql))
-                {
-                    Notificacion.Success(this, "No se ha podido establecer una conexión con la BD =(");
                     return;
                 }
 
@@ -111,11 +85,11 @@ namespace GenMVC
                 }
 
                 // Existe la tabla mencionada?
-                if (!_sql.ExisteTabla(_sql, ddlBdTablas.SelectedValue))
-                {
-                    Notificacion.Success(this, $"No exista la tabla {ddlBdTablas.SelectedValue}");
-                    return;
-                }
+                //if (!_sql.ExisteTabla(_sql, ddlBdTablas.SelectedValue))
+                //{
+                //    Notificacion.Success(this, $"No exista la tabla {ddlBdTablas.SelectedValue}");
+                //    return;
+                //}
 
                 // Generamos la consulta
                 DataTable dataTable = _sql.Select_Campos(_sql, ddlBdTablas.SelectedValue);
@@ -130,7 +104,64 @@ namespace GenMVC
             }
         }
 
+        bool ValidarBd()
+        {
+            try
+            {
+                // Validmoas que haya ingresado un servidor
+                if (Cadena.Vacia(txtDbServidor.Text))
+                {
+                    Notificacion.Success(this, "Debe de ingresar un servidor SQL al cual conectarse");
+                    return false;
+                }
+
+                // Validmoas que haya ingresado un usario
+                if (Cadena.Vacia(txtDbusuario.Text))
+                {
+                    Notificacion.Success(this, "Debe de ingresar un usuario SQL con el cual se conectará");
+                    return false;
+                }
+
+                // Validmoas que haya ingresado una contraseña
+                if (Cadena.Vacia(txtContrasenia.Text))
+                {
+                    Notificacion.Success(this, "Debe de ingresar una contraseña de SQL");
+                    return false;
+                }
+
+                // Validmoas que haya ingresado una BD
+                if (Cadena.Vacia(txtDbBaseDatos.Text))
+                {
+                    Notificacion.Success(this, "Debe ingresar la base de datos a la cual desea conectarse");
+                    return false;
+                }
+
+                // Llenamos
+                _sql.Servidor = txtDbServidor.Text;
+                _sql.Usuario = txtDbusuario.Text;
+                _sql.Contrasenia = txtContrasenia.Text;
+                _sql.BaseDatos = txtDbBaseDatos.Text;
+
+                // Validamos si funciona
+                if (!_sql.ProbarConexion(_sql))
+                {
+                    Notificacion.Success(this, "No se ha podido establecer una conexión con la BD =(");
+                    return false;
+                }
+
+                // Libre de pecados
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Notificacion.Success(this, $"Ha ocurrido un error; {ex.Message}");
+                return false;
+            }
+        }
+
         #endregion
+
+        #region Acrónimos
 
         protected void btnGuardarAcronimo_OnClick(object sender, EventArgs e)
         {
@@ -200,6 +231,46 @@ namespace GenMVC
             {
                 Notificacion.Success(this, $"Ha ocurrido un error; {ex.Message}");
                 return false;
+            }
+        }
+
+        #endregion
+
+        protected void btngenerarClases_OnClick(object sender, EventArgs e)
+        {
+            List<OCampos> listOCampos = new List<OCampos>();
+            try
+            {
+                // Llenamos
+                foreach (GridViewRow row in GridView1.Rows)
+                {
+                    // Seteamos el objeto
+                    _oCampos = new OCampos();
+                    _oCampos.Campo = row.Cells[0].Text;
+                    _oCampos.TipoSql = row.Cells[1].Text;
+                    _oCampos.TipoDotNet = row.Cells[2].Text;
+                    _oCampos.Largo = Convert.ToInt32(row.Cells[3].Text);
+                    _oCampos.Precision = Convert.ToInt32(row.Cells[4].Text);
+                    _oCampos.Escala = Convert.ToInt32(row.Cells[5].Text);
+                    _oCampos.Where = row.Cells[6].Text == "1";
+
+                    // Agregamos
+                    listOCampos.Add(_oCampos);
+                }
+
+                // Leer acronimo
+                _acronimo = Acronimo.Leer();
+
+                // Generamos el modelo
+                txtModelo.InnerText = Modelo.Generar(listOCampos, _acronimo, ddlBdTablas.SelectedValue);
+
+                // Generamos el controlador
+                txtControlador.InnerText = Controlador.Generar(listOCampos, _acronimo, ddlBdTablas.SelectedValue);
+
+            }
+            catch (Exception ex)
+            {
+                Notificacion.Success(this, $"Ha ocurrido un error; {ex.Message}");
             }
         }
     }

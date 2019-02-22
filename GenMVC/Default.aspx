@@ -51,12 +51,12 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
 
-                            <div role="tabpanel" class="tab-pane active" id="tabInicio">
+                            <div role="tabpanel" class="tab-pane active" id="tabInicio" style="padding: 10px;">
 
-                                <div class="row" style="padding: 10px;">
-
-                                    <asp:UpdatePanel runat="server">
-                                        <ContentTemplate>
+                                <asp:UpdatePanel runat="server">
+                                    <ContentTemplate>
+                                        
+                                        <div class="row">
 
                                             <div class="col-xs-12">
 
@@ -76,10 +76,16 @@
 
                                             </div>
 
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                        </div>
 
-                                </div>
+                                        <div class="row">
+                                            
+                                            <asp:Button ID="btngenerarClases" runat="server" CssClass="btn btn-success" Text="Generar clases" OnClick="btngenerarClases_OnClick" />
+
+                                        </div>
+
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
 
                             </div>
 
@@ -162,10 +168,10 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane" id="TabAcronimo">
-                                
+
                                 <asp:UpdatePanel runat="server">
                                     <ContentTemplate>
-                                        
+
                                         <div class="row">
 
                                             <div class="col-xs-6">
@@ -223,10 +229,30 @@
 
                 </div>
                 <div role="tabpanel" class="tab-pane" id="Modelo" style="padding: 10px;">
-                    Modelo
+                    
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            
+                            <div class="row">
+                                <textarea id="txtModelo" runat="server" class="form-control" rows="300"></textarea>
+                            </div>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
                 </div>
                 <div role="tabpanel" class="tab-pane" id="Controlador" style="padding: 10px;">
-                    Controlador
+                    
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            
+                            <div class="row">
+                                <textarea id="txtControlador" runat="server" class="form-control" rows="300"></textarea>
+                            </div>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
                 </div>
                 <div role="tabpanel" class="tab-pane" id="QueryUsp" style="padding: 10px;">
                     QueryUsp

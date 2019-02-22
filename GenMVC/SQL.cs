@@ -53,10 +53,12 @@ namespace GenMVC
                     sqlConnection.Open();
 
                     // Comando
-                    SqlCommand sqlCommand = new SqlCommand();
-                    sqlCommand.Connection = sqlConnection;
-                    sqlCommand.CommandText = $"SELECT 1 AS 'Existe' FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME = '{tbl}';";
-                    sqlCommand.CommandType = CommandType.Text;
+                    SqlCommand sqlCommand = new SqlCommand
+                    {
+                        Connection = sqlConnection,
+                        CommandText = $"SELECT 1 AS 'Existe' FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE TABLE_NAME = '{tbl}';",
+                        CommandType = CommandType.Text
+                    };
                     SqlDataReader reader = sqlCommand.ExecuteReader();
                     while (reader.Read())
                     {
