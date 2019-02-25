@@ -20,6 +20,7 @@ namespace GenMVC
                 stringBuilder.AppendLine($"");
                 stringBuilder.AppendLine($"namespace {acronimo.ProyectoModelo}");
                 stringBuilder.AppendLine($"{{");
+                stringBuilder.AppendLine($"    // ReSharper disable once InconsistentNaming");
                 stringBuilder.AppendLine($"    public class {acronimo.AcronimoModelo}{tbl}");
                 stringBuilder.AppendLine($"    {{");
 

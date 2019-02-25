@@ -24,6 +24,7 @@ namespace GenMVC
                 stringBuilder.AppendLine($"");
                 stringBuilder.AppendLine($"namespace {acronimo.ProyectoControlador}");
                 stringBuilder.AppendLine($"{{");
+                stringBuilder.AppendLine($"    // ReSharper disable once InconsistentNaming");
                 stringBuilder.AppendLine($"    public class {acronimo.AcronimoControlador}{tbl}");
                 stringBuilder.AppendLine($"    {{");
                 stringBuilder.AppendLine($"        private {acronimo.AcronimoModelo}{tbl} {acronimo.AcronimoModelo}{tbl} = new {acronimo.AcronimoModelo}{tbl}();");
@@ -44,19 +45,19 @@ namespace GenMVC
                     {
                         case "decimal":
                         case "int":
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {rowSelect.Campo}")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {{{rowSelect.Campo}}}")}\";");
                             break;
 
                         case "bool":
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {rowSelect.Campo}")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {{{rowSelect.Campo}}}")}\";");
                             break;
 
                         case "DateTime":
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"SET DATEFORMAT YMD; {GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{rowSelect.Campo}'")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"SET DATEFORMAT YMD; {GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{{{rowSelect.Campo}}}'")}\";");
                             break;
 
                         default:
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{rowSelect.Campo}'")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{{{rowSelect.Campo}}}'")}\";");
                             break;
                     }
 
@@ -104,8 +105,12 @@ namespace GenMVC
                             stringBuilder.AppendLine($"            {acronimo.AcronimoModelo}{tbl}.{row.Campo} = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal(\"{row.Campo}\")) ? new DateTime(1900, 01, 01) : sqlDataReader.GetDateTime(sqlDataReader.GetOrdinal(\"{row.Campo}\"));");
                             break;
 
+                        //case "bool":
+                        //    stringBuilder.AppendLine($"            {acronimo.AcronimoModelo}{tbl}.{row.Campo} = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal(\"{row.Campo}\")) ? false : sqlDataReader.GetBoolean(sqlDataReader.GetOrdinal(\"{row.Campo}\"));");
+                        //    break;
+
                         case "bool":
-                            stringBuilder.AppendLine($"            {acronimo.AcronimoModelo}{tbl}.{row.Campo} = sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal(\"{row.Campo}\")) ? false : sqlDataReader.GetBoolean(sqlDataReader.GetOrdinal(\"{row.Campo}\"));");
+                            stringBuilder.AppendLine($"            {acronimo.AcronimoModelo}{tbl}.{row.Campo} = !sqlDataReader.IsDBNull(sqlDataReader.GetOrdinal(\"{row.Campo}\")) && sqlDataReader.GetBoolean(sqlDataReader.GetOrdinal(\"{row.Campo}\"));");
                             break;
 
                         default:
