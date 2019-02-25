@@ -35,10 +35,12 @@
                 <li role="presentation"><a href="#Modelo" aria-controls="Modelo" role="tab" data-toggle="tab">Modelo</a></li>
                 <li role="presentation"><a href="#Controlador" aria-controls="Controlador" role="tab" data-toggle="tab">Controlador</a></li>
                 <li role="presentation"><a href="#QueryUsp" aria-controls="QueryUsp" role="tab" data-toggle="tab">Query & USP</a></li>
+                <li role="presentation"><a href="#Granular" aria-controls="Granular" role="tab" data-toggle="tab">Granular</a></li>
             </ul>
 
             <!-- Tab Principal8 -->
             <div class="tab-content">
+
                 <div role="tabpanel" class="tab-pane active" id="Principal" style="padding: 10px;">
 
                     <div>
@@ -55,7 +57,7 @@
 
                                 <asp:UpdatePanel runat="server">
                                     <ContentTemplate>
-                                        
+
                                         <div class="row">
 
                                             <div class="col-xs-12">
@@ -79,7 +81,7 @@
                                         </div>
 
                                         <div class="row">
-                                            
+
                                             <asp:Button ID="btngenerarClases" runat="server" CssClass="btn btn-success" Text="Generar clases" OnClick="btngenerarClases_OnClick" />
 
                                         </div>
@@ -228,11 +230,12 @@
                     </div>
 
                 </div>
+
                 <div role="tabpanel" class="tab-pane" id="Modelo" style="padding: 10px;">
-                    
+
                     <asp:UpdatePanel runat="server">
                         <ContentTemplate>
-                            
+
                             <div class="row">
                                 <textarea id="txtModelo" runat="server" class="form-control" rows="300"></textarea>
                             </div>
@@ -241,11 +244,12 @@
                     </asp:UpdatePanel>
 
                 </div>
+
                 <div role="tabpanel" class="tab-pane" id="Controlador" style="padding: 10px;">
-                    
+
                     <asp:UpdatePanel runat="server">
                         <ContentTemplate>
-                            
+
                             <div class="row">
                                 <textarea id="txtControlador" runat="server" class="form-control" rows="300"></textarea>
                             </div>
@@ -254,9 +258,25 @@
                     </asp:UpdatePanel>
 
                 </div>
+
                 <div role="tabpanel" class="tab-pane" id="QueryUsp" style="padding: 10px;">
                     QueryUsp
                 </div>
+
+                <div role="tabpanel" class="tab-pane" id="Granular" style="padding: 10px;">
+
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+
+                            <div class="row">
+                                <textarea id="txtGranular" runat="server" class="form-control" rows="300"></textarea>
+                            </div>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
+                </div>
+
             </div>
 
         </div>

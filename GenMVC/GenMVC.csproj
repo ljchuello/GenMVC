@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="Fichero.cs" />
     <Compile Include="Controlador.cs" />
+    <Compile Include="Granular.cs" />
     <Compile Include="Modelo.cs" />
     <Compile Include="Notificacion.cs" />
     <Compile Include="OCampos.cs" />
@@ -126,9 +127,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -267,6 +267,9 @@ namespace GenMVC
                 // Generamos el controlador
                 txtControlador.InnerText = Controlador.Generar(listOCampos, _acronimo, ddlBdTablas.SelectedValue);
 
+                // Granular
+                txtGranular.InnerText = Granular.Generar(listOCampos, _acronimo, ddlBdTablas.SelectedValue);
+
             }
             catch (Exception ex)
             {
