@@ -10,6 +10,7 @@ namespace GenMVC
         public string AcronimoModelo { set; get; } = string.Empty;
         public string ProyectoControlador { set; get; } = string.Empty;
         public string AcronimoControlador { set; get; } = string.Empty;
+        public string ProyectoContenedor { set; get; } = string.Empty;
 
         private static string directorio = @"C:\GenMVC\";
         private static readonly string archivo = $"{directorio}\\acronimo.config";

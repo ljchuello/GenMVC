@@ -211,6 +211,13 @@
                                                 </div>
 
                                                 <div class="row">
+                                                    <div class="form-group col-xs-12">
+                                                        <label for="<%=txtProyectoContenedor.ClientID%>">Proyecto contenedor</label>
+                                                        <asp:TextBox ID="txtProyectoContenedor" runat="server" CssClass="form-control"></asp:TextBox>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
                                                     <div class="col-xs-12">
                                                         <asp:Button ID="btnGuardarAcronimo" runat="server" CssClass="btn btn-primary" Text="Guardar" OnClick="btnGuardarAcronimo_OnClick" />
                                                     </div>

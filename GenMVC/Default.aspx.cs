@@ -31,6 +31,7 @@ namespace GenMVC
                 txtAcronimoModelo.Text = _acronimo.AcronimoModelo;
                 txtProyectoControlador.Text = _acronimo.ProyectoControlador;
                 txtAcronimoControlador.Text = _acronimo.AcronimoControlador;
+                txtProyectoContenedor.Text = _acronimo.ProyectoContenedor;
 
                 // Evitamso el doble click
                 UControl.EvitarDobleEnvioButton(this, btnConectarse);
@@ -178,6 +179,7 @@ namespace GenMVC
                 _acronimo.AcronimoModelo = txtAcronimoModelo.Text;
                 _acronimo.ProyectoControlador = txtProyectoControlador.Text;
                 _acronimo.AcronimoControlador = txtAcronimoControlador.Text;
+                _acronimo.ProyectoContenedor = txtProyectoContenedor.Text;
 
                 // Guardamos
                 Acronimo.Escribir(_acronimo);
@@ -221,6 +223,12 @@ namespace GenMVC
                 if (Cadena.Vacia(txtAcronimoControlador.Text))
                 {
                     Notificacion.Success(this, "Debe ingresar el nombre del acronimo del controlador");
+                    return false;
+                }
+                // Validamos que haya ingresado un contenedor
+                if (Cadena.Vacia(txtProyectoContenedor.Text))
+                {
+                    Notificacion.Success(this, "Debe ingresar el nombre de proyecto contenedor");
                     return false;
                 }
 
