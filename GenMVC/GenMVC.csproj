@@ -122,6 +122,7 @@
     <Content Include="bootstrap\v3.3.7\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="bootstrap\v3.3.7\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
