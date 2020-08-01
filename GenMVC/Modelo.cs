@@ -15,12 +15,11 @@ namespace GenMVC
                 // Empezamos
                 stringBuilder.AppendLine($"// {acronimo.AcronimoModelo}{tbl}.cs");
                 stringBuilder.AppendLine($"// Clase generada por");
-                stringBuilder.AppendLine($"// Sermatick Cia Ltda");
-                stringBuilder.AppendLine($"using System;");
+                stringBuilder.AppendLine($"// Leonardo Chuello");
+                stringBuilder.AppendLine($"// {DateTime.Now:yyyy-MM-dd}");
                 stringBuilder.AppendLine($"");
                 stringBuilder.AppendLine($"namespace {acronimo.ProyectoModelo}");
                 stringBuilder.AppendLine($"{{");
-                stringBuilder.AppendLine($"    // ReSharper disable once InconsistentNaming");
                 stringBuilder.AppendLine($"    public class {acronimo.AcronimoModelo}{tbl}");
                 stringBuilder.AppendLine($"    {{");
 

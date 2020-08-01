@@ -19,7 +19,8 @@ namespace GenMVC
                 // Empezamos
                 stringBuilder.AppendLine($"// O{tbl}.cs");
                 stringBuilder.AppendLine($"// Clase generada por");
-                stringBuilder.AppendLine($"// Sermatick Cia Ltda");
+                stringBuilder.AppendLine($"// Leonardo Chuello");
+                stringBuilder.AppendLine($"// {DateTime.Now:yyyy-MM-dd}");
                 stringBuilder.AppendLine($"using System.Text;");
                 stringBuilder.AppendLine($"using {acronimo.ProyectoModelo};");
                 stringBuilder.AppendLine($"");

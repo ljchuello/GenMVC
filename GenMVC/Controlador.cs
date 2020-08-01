@@ -16,7 +16,8 @@ namespace GenMVC
                 // Empezamos
                 stringBuilder.AppendLine($"// {acronimo.AcronimoControlador}{tbl}.cs");
                 stringBuilder.AppendLine($"// Clase generada por");
-                stringBuilder.AppendLine($"// Sermatick Cia Ltda");
+                stringBuilder.AppendLine($"// Leonardo Chuello");
+                stringBuilder.AppendLine($"// {DateTime.Now:yyyy-MM-dd}");
                 stringBuilder.AppendLine($"using System;");
                 stringBuilder.AppendLine($"using System.Data;");
                 stringBuilder.AppendLine($"using System.Data.SqlClient;");
@@ -24,7 +25,6 @@ namespace GenMVC
                 stringBuilder.AppendLine($"");
                 stringBuilder.AppendLine($"namespace {acronimo.ProyectoControlador}");
                 stringBuilder.AppendLine($"{{");
-                stringBuilder.AppendLine($"    // ReSharper disable once InconsistentNaming");
                 stringBuilder.AppendLine($"    public class {acronimo.AcronimoControlador}{tbl}");
                 stringBuilder.AppendLine($"    {{");
                 stringBuilder.AppendLine($"        private {acronimo.AcronimoModelo}{tbl} {acronimo.AcronimoModelo}{tbl} = new {acronimo.AcronimoModelo}{tbl}();");
@@ -39,29 +39,30 @@ namespace GenMVC
                     stringBuilder.AppendLine($"            try");
                     stringBuilder.AppendLine($"            {{");
                     stringBuilder.AppendLine($"                SqlCommand sqlCommand = new SqlCommand();");
-                    stringBuilder.AppendLine($"                sqlCommand.Connection = Conexion.MySqlConnection;");
+                    stringBuilder.AppendLine($"                sqlCommand.Connection = Conexion.Devolver_SoloLectura();");
+                    stringBuilder.AppendLine($"                sqlCommand.CommandType = CommandType.Text;");
 
                     switch (rowSelect.TipoSql)
                     {
                         case "decimal":
                         case "int":
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {{{rowSelect.Campo}}}")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = @{rowSelect.Campo}")}\";");
                             break;
 
                         case "bool":
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = {{{rowSelect.Campo}}}")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = @{rowSelect.Campo}")}\";");
                             break;
 
                         case "DateTime":
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"SET DATEFORMAT YMD; {GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{{{rowSelect.Campo}}}'")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"SET DATEFORMAT YMD; {GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = @{rowSelect.Campo}'")}\";");
                             break;
 
                         default:
-                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = '{{{rowSelect.Campo}}}'")}\";");
+                            stringBuilder.AppendLine($"                sqlCommand.CommandText = $\"{GenerarSelect(listCampos, tbl, $"WHERE {rowSelect.Campo} = @{rowSelect.Campo}")}\";");
                             break;
                     }
 
-                    stringBuilder.AppendLine($"                sqlCommand.CommandType = CommandType.Text;");
+                    stringBuilder.AppendLine($"                sqlCommand.Parameters.AddWithValue(\"@{rowSelect.Campo}\", {rowSelect.Campo});");
                     stringBuilder.AppendLine($"                using (SqlDataReader sqlDataReader = sqlCommand.ExecuteReader())");
                     stringBuilder.AppendLine($"                {{");
                     stringBuilder.AppendLine($"                    while (sqlDataReader.Read())");
