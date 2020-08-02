@@ -16,20 +16,6 @@ namespace GenMVC
                 List<OCampos> conWhere = listCampos.Where(x => x.Where).ToList();
                 List<OCampos> sinWhere = listCampos.Where(x => x.Where == false).ToList();
 
-                // Empezamos
-                stringBuilder.AppendLine($"// O{tbl}.cs");
-                stringBuilder.AppendLine($"// Clase generada por");
-                stringBuilder.AppendLine($"// Leonardo Chuello");
-                stringBuilder.AppendLine($"// {DateTime.Now:yyyy-MM-dd}");
-                stringBuilder.AppendLine($"using System.Text;");
-                stringBuilder.AppendLine($"using {acronimo.ProyectoModelo};");
-                stringBuilder.AppendLine($"");
-                stringBuilder.AppendLine($"namespace {acronimo.ProyectoContenedor}");
-                stringBuilder.AppendLine($"{{");
-                stringBuilder.AppendLine($"    // ReSharper disable once InconsistentNaming");
-                stringBuilder.AppendLine($"    public static class O{tbl}");
-                stringBuilder.AppendLine($"    {{");
-
                 #region Insert
 
                 stringBuilder.AppendLine($"        // ReSharper disable once InconsistentNaming");

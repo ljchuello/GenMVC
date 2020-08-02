@@ -62,6 +62,8 @@ namespace GenMVC
                 ddlBdTablas.DataValueField = "TABLE_NAME";
                 ddlBdTablas.DataBind();
 
+                btnBdGenerar_OnClick(null, null);
+
                 // Libre de pecados
                 Notificacion.Success(this, "Se ha establecido la conexión con éxito");
             }
