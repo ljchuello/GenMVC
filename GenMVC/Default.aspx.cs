@@ -100,6 +100,8 @@ namespace GenMVC
                 // Le mostramos eso al grid
                 GridView1.DataSource = dataTable;
                 GridView1.DataBind();
+
+                btngenerarClases_OnClick(null, null);
             }
             catch (Exception ex)
             {
